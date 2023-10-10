@@ -1,0 +1,1177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Booking - made with softr.io</title>
+    
+
+    <link rel="icon" type="image/x-icon" href="https://softr-prod.imgix.net/applications/8f7af9fb-a550-425d-b327-48195c193a5f/assets/c870e998-d79a-414a-8577-5bb4e5b7464d.svg?rnd=1622671497214"/>
+
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js"></script>
+
+
+    <style>
+
+        html {
+            scroll-behavior: smooth;
+            overflow: hidden;
+        }
+
+        html, body {
+            overscroll-behavior: none;
+            height: 100%
+        }
+
+        p, h1, h2, h3, h4, h5, small {
+            white-space: pre-line;
+        }
+
+        .preview-header {
+            background-color: #fff;
+            z-index: 300;
+            position: fixed;
+            padding: 0;
+            box-shadow: 0 3px 4px -2px #25252508;
+            width: 100%;
+        }
+
+        .preview-header .toolbar {
+            font-size: 12px;
+            width: 100%;
+            height: 56px;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .preview-header__screens {
+            margin-right: 250px;
+        }
+
+        .preview-header .update-banner {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            background-color: #212121;
+            height: 40px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: left;
+            color: #FFFFFF;
+        }
+
+        .preview-header .update-banner .refresh-button {
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: center;
+            color: #5A5D63;
+            border-radius: 4px;
+            border: 0;
+            background-color: #F0F0F4;
+            margin-left: 16px;
+        }
+
+        .preview-header .update-banner .refresh-button:focus {
+            outline: none;
+        }
+
+        .preview-header__view--selection label {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 20px;
+            text-align: left;
+            color: #383B3D;
+            padding-left: 16px;
+            margin-bottom: 0;
+            padding-right: 8px;
+
+        }
+
+        .preview-header__view--selection {
+            display: flex;
+            align-items: center;
+        }
+
+        .preview-header__view--selection .choices,
+        .preview-header__view--selection .choices__inner {
+            width: 256px;
+            height: 32px;
+            min-height: 32px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: left;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .preview-header__view--selection .ph-info {
+            font-size: 16px;
+            color: #AEAEB5;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .preview-header__shareable {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preview_header__shareable--link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: center;
+            color: #5A5D63 !important;
+            margin-right: 16px;
+            cursor: pointer;
+            padding: 4px 8px;
+            text-decoration: none !important;
+        }
+
+        .preview_header__shareable--link:hover {
+            background-color: #FCEED9;
+            border-radius: 8px;
+        }
+
+        .preview_header__shareable--link i {
+            padding-right: 8px;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .preview-header__close {
+            border-left: 1px solid #F0F0F4;
+            padding-left: 12px;
+        }
+
+        i.desktop,
+        i.desktop-active {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        i.desktop-active {
+            display: none;
+        }
+
+        i.tablet,
+        i.tablet-active {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        i.tablet-active {
+            display: none;
+        }
+
+        i.mobile,
+        i.mobile-active {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        i.mobile-active {
+            display: none;
+        }
+
+        .icon {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon i {
+            color: #5A5D63;
+        }
+
+        .icon.active {
+            border-bottom: 2px solid #EEA941;
+        }
+
+        .icon.active i {
+            color: #212121;
+        }
+
+        .icon.active i.mobile-active {
+            display: inline-block;
+        }
+
+        .icon.active i.mobile {
+            display: none;
+        }
+
+        .icon.active i.tablet-active {
+            display: inline-block;
+        }
+
+        .icon.active i.tablet {
+            display: none;
+        }
+
+        .icon.active i.desktop-active {
+            display: inline-block;
+        }
+
+        .icon.active i.desktop {
+            display: none;
+        }
+
+        .iframe-container {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+            position: relative;
+            background-color: #343a40 !important;
+            height: 100%;
+        }
+
+        .full-screen-preview__iframe {
+            width: 100%;
+            background-color: white;
+            border: 0;
+            height: calc(100% - 48px);
+            margin-top: 56px;
+            position: absolute;
+            border: none;
+        }
+
+        .iframe-preview--mobile {
+            width: 375px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+
+        .iframe-preview--tablet {
+            width: 768px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+
+        .show {
+            display: inline-block;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .choices__list.choices__list--dropdown {
+            border-radius: 8px!important;
+            border: 0!important;
+            box-shadow: 0px 2px 4px 0px rgba(33, 33, 33, 0.1)!important;
+        }
+
+        .choices .choices__list .user {
+            display: flex;
+            align-items: center;
+        }
+
+        .choices .choices__list .empty-user-list {
+            display: flex;
+            align-items: center;
+            background-color: #EDF3FB;
+            border: 1px solid #C9DAF2;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .choices .choices__list .empty-user-list i {
+            margin-right: 8px;
+            margin-left: 0;
+            color: #4D85D5;
+            font-size: 18px;
+        }
+
+        .choices .choices__list .empty-user-list a {
+            color: #4D85D5;
+        }
+
+        .choices__item.choices__item--selectable {
+            background: transparent;
+        }
+
+        .choices__item.choices__item--choice.is-selected {
+            background: #F0F0F4;
+            font-weight: 600;
+        }
+
+        .choices__item.choices__item--choice.is-highlighted {
+            background: #fcfcfc;
+        }
+
+        .choices__item.choices__item--choice.has-no-results {
+            padding-left: 10px;
+        }
+
+        .choices .choices__list .user .avatar {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 1px solid;
+            border-radius: 50%;
+            margin: 8px;
+            color: #212121;
+            overflow: hidden;
+        }
+
+        .choices .choices__list.choices__list--single {
+            padding: 2px 10px 2px 10px;
+        }
+
+        .choices .choices__list.choices__list--single .user .email {
+            max-width: 185px;
+            width: 185px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .choices .choices__list.choices__list--single .user .avatar {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin: 0;
+            margin-right: 4px;
+            color: #AEAEB5;
+            border: none;
+        }
+
+        .choices__heading {
+            font-weight: 600;
+            font-size: 11px;
+            padding: 0 15px;
+            border-bottom: none;
+            color: #AEAEB5;
+        }
+
+        /* Customize the dropdown icon using Phosphor Icons */
+
+        .choices[data-type*=select-one]::after {
+            content: "\e9fe"; /* Replace with the desired Phosphor Icon Unicode */
+            font-family: "Phosphor"; /* Use the Phosphor Icons font-family */
+            font-size: 16px;
+            color: #AEAEB5;
+            border: 0;
+            position: absolute;
+            top: 9px;
+            right: 23px;
+        }
+
+        /* Style the dropdown icon when the dropdown is open */
+        .choices[data-type*=select-one].is-open::after {
+            top: 25px;
+            transform: rotate(180deg);
+            right: 8px;
+            margin: 0;
+        }
+
+        .choices .choices__list .user .info {
+            max-width: 150px;
+            width: 150px;
+        }
+
+        .choices .choices__list .user .info.non-logged-in {
+            max-width: 190px;
+            width: 190px;
+            margin-left: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #e5e5ea;
+            padding-bottom: 12px;
+        }
+
+        .choices .choices__list .user .avatar .image {
+            width: 40px;
+            height: 40px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .choices .choices__list .user .name {
+            color: #212121;
+        }
+
+        .choices .choices__list .user .email {
+            color: #5A5D63;
+            margin: 2px 0 4px;
+            padding-right: 4px;
+        }
+
+        .choices .choices__list .user .role {
+            color: #383B3D;
+            font-size: 12px;
+            background-color: #F0F0F4;
+            display: inline-block;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        .choices .choices__list .user .check {
+            font-size: 18px;
+            position: relative;
+            right: 4px;
+        }
+
+        .choices[data-type*=select-one] .choices__input {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #F0F0F4;
+            background-color: #FAFAFC;
+            border-radius: 8px;
+            margin: 16px auto;
+            text-indent: 8px;
+        }
+
+        .choices__item {
+            background-color: #fff;
+            transition: .25s;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .choices__item.is-highlighted {
+            background-color: #F0F0F4;
+        }
+
+        .choices__list--dropdown .choices__item,
+        .choices__list[aria-expanded] .choices__item {
+            font-size: 13px;
+            padding: 6px 0;
+            border-radius: 4px;
+            margin: 7px;
+        }
+
+        .close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 28px;
+        }
+
+        .close:focus {
+            outline: none;
+        }
+
+        .tooltip-inner {
+            max-width: 300px !important;
+            font-size: 12px;
+            padding: 8px;
+            background: #28192D;
+            color: #fff;
+            border: 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+        .bs-tooltip-bottom .arrow::before {
+            border-bottom-color: #28192D;
+        }
+
+        .viewSelect {
+            width: 245px;
+        }
+
+        /*Confirmation Modal styles*/
+        #userConfirmationModal .modal-dialog {
+            max-width: 520px;
+        }
+
+        #userConfirmationModal .modal-content {
+            box-shadow: 0 24px 48px 0 #2121210A;
+            border-radius: 16px;
+            border: 0;
+            padding: 32px;
+
+        }
+
+        #userConfirmationModal .modal-header {
+            border: 0;
+            padding: 0;
+            margin-bottom: 16px;
+        }
+
+        #userConfirmationModal .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32px;
+            letter-spacing: 0;
+            text-align: left;
+            white-space: normal;
+            color: #212121;
+        }
+
+        #userConfirmationModal .modal-body {
+            color: #5A5D63;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: left;
+            padding: 0;
+            padding-right: 4px;
+            white-space: normal;
+        }
+
+        #userConfirmationModal .modal-body p {
+            white-space: normal;
+            padding: 0;
+            margin: 0;
+        }
+
+        #userConfirmationModal .modal-footer {
+            border: 0;
+            padding: 0;
+            margin-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #userConfirmationModal .remember-checkbox label {
+            color: #383B3D;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 23px;
+            letter-spacing: 0;
+            text-align: left;
+
+        }
+
+        #userConfirmationModal .submit-btn {
+            background-color: #EEA941;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: center;
+            border: 0;
+            color: #28192D;
+
+        }
+
+        /*Confirmation Modal styles end */
+
+        /*Toaster Modal styles */
+        #toast-container {
+            bottom: 56px;
+            left: 25px;
+            position: absolute;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            max-width: 400px;
+            width: 400px;
+        }
+
+
+        div#toast-container > div.toast-body {
+            background-color: #FCEFEF;
+            background-image: url('https://softr-assets-eu-shared.s3.eu-central-1.amazonaws.com/studio/blocks/assets/toaster-close-icon.svg') !important;
+            background-repeat: no-repeat;
+            background-position: 12px center;
+            color: #383B3D;
+            max-width: 400px;
+            width: 400px;
+            border-radius: 12px;
+            opacity: 1;
+            border: 0;
+            padding-left: 45px;
+        }
+
+        #toast-container .toast-body .message {
+            max-width: 300px !important;
+            width: 300px !important;
+        }
+
+        #toast-container .toast-body .close {
+            top: 5px;
+            right: 10px;
+            font-size: 18px;
+        }
+        @media (max-width: 910px) {
+            .preview-header {
+                display: none;
+            }
+        }
+        @media (max-width: 576px) {
+            div#toast-container > div.toast-body {
+                max-width: 320px !important;
+                width: 320px !important;
+            }
+
+            #toast-container .toast-body .message {
+                max-width: 250px !important;
+                width: 250px !important;
+            }
+        }
+
+        /*Toaster Modal styles end */
+
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            window.addEventListener('message', (event) => {
+                const message = event.data;
+                if (message.name === 'user-sign-out-triggered') {
+                    choices.setChoiceByValue(applicationUsers[0].value);
+                    window.history.pushState(null, '', '/' + window.location.search);
+                }
+            });
+
+            const iframe = document.querySelector(".full-screen-preview__iframe");
+            const bannerForUpdate = document.querySelector(".update-banner");
+            const links = document.querySelectorAll(".icon");
+            const refreshButton = document.getElementById('refresh-button');
+            const shareableLink = document.querySelector('.preview_header__shareable--link');
+            const selectElement = document.getElementById('viewSelect');
+            let previewVersion = getCookie('previewVersion');
+            const noChoicesTemplate = `
+                            <div class="empty-user-list">
+                                <i class="ph ph-info"></i>
+                                <div class="message">
+                                    Your application doesn't have registered users.
+                                    <a href="https://docs.softr.io/user-management/pxnkp9H3qyEVMF6XUceqnj/add-users-to-a-softr-app/kBJGPeH635j7HDW4NYoDDs"
+                                    target="_blank">Learn more.</a>
+                                </div>
+                            </div>
+                    `;
+            let lastUpdateResponse = {
+                updated: false,
+                givenVersion: 0,
+                newestVersion: 0
+            };
+
+            let selectedUserEmail = '';
+            let applicationUsers = [];
+
+            setSelectedScreenSize();
+            initTooltip();
+            loadApplicationUsers();
+            listenToNewUpdates();
+
+            iframe.addEventListener('load', function () {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                const intervalId = setInterval(() => {
+                    updateLinksInIframe(iframeDocument);
+                }, 1000);
+
+                // Cleanup function to clear the interval when the iframe is unloaded
+                iframe.addEventListener('unload', function () {
+                    clearInterval(intervalId);
+                });
+            });
+
+            const choices = new Choices(selectElement, {
+                searchEnabled: true,
+                searchFields: ['customProperties.name', 'customProperties.email'],
+                shouldSort: false,
+                searchChoices: function(choice, searchValue) {
+                    return choice.value.startsWith(searchValue);
+                },
+                allowHTML: true,
+                itemSelectText: '',
+                renderChoiceLimit: -1,
+                choices: applicationUsers,
+                renderSelectedChoices: 'always',
+                searchPlaceholderValue: 'Search users',
+                noChoicesText: noChoicesTemplate,
+                fuseOptions: {
+                    threshold: 0.1,
+                    distance: 1000
+                },
+                classNames: {
+                    containerOuter: 'choices',
+                    containerInner: 'choices__inner',
+                    input: 'choices__input',
+                    list: 'choices__list',
+                    listItem: 'choices__list--single',
+                },
+                callbackOnCreateTemplates: function (template) {
+                    return {
+                        ...template,
+                        choice: (event, data) => {
+                            const {classNames} = event;
+                            const {imageUrl, icon, name, email, role} = data.customProperties;
+                            return template(
+                                `
+                                             <div class="${classNames.item} ${classNames.itemChoice} ${data.selected ? classNames.selectedState : ''}" data-select-text="${this.config.itemSelectText}" data-choice ${data.disabled ? 'data-choice-disabled aria-disabled="true"' : 'data-choice-selectable'} data-id="${data.id}" data-value="${data.value}" ${data.groupId > 0 ? 'role="treeitem"' : 'role="option"'}>
+                                                <div class="user">
+                                                ${icon ?
+                                    `<div class="avatar">
+                                                       ${imageUrl ? `<div class="image" style="background-image: url('${imageUrl}')"></div>` : ''}
+                                                       ${icon ? `<i class="ph ${icon}"></i>` : ''}
+                                                    </div>
+                                                    <div class="info">
+                                                        ${name ? `<div class="name">${name}</div>` : ''}
+                                                        ${email ? `<div class="email">${email}</div>` : ''}
+                                                        ${role ? `<div class="role">${role}</div> ` : ''}
+                                                    </div>`
+                                    :
+                                    `<div class="info non-logged-in"> ${email ? `<div class="email">${email}</div>` : ''}</div>`
+                                }
+                                                    ${
+                                    data.selected
+                                        ? '<i class="ph ph-check check"></i>'
+                                        : ''
+                                }
+                                                </div>
+                                              </div>
+                                    `, classNames, data);
+                        },
+                        item: (event, data) => {
+                            const {classNames} = event;
+                            const {imageUrl, icon, name, email, role} = data.customProperties;
+                            return template(
+                                `
+                                                <div class="user">
+                                                    <div class="avatar">
+                                                       ${email === 'Non-logged-in user' ? ` <i class="ph ph-globe"></i>` : `<i class="ph ph-user"></i>`}
+                                                    </div>
+                                                    <div class="info">
+                                                        ${email ? `<div class="email">${email}</div>` : ''}
+                                                    </div>
+                                                </div>
+
+                                    `, classNames, data);
+                        }
+                    };
+                },
+            });
+
+            refreshButton.addEventListener('click', () => {
+                reloadPreview();
+            });
+
+            shareableLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                const currentURL = window.location.href;
+                navigator.clipboard.writeText(currentURL)
+                    .then(() => {
+                        console.log('URL copied to clipboard:', currentURL);
+                        setTimeout(() => $('.preview_header__shareable--link').tooltip('hide'), 1000);
+                    })
+                    .catch((error) => {
+                        console.error('Failed to copy URL to clipboard:', error);
+                        setTimeout(() => $('.preview_header__shareable--link').tooltip('hide'), 1000);
+                    });
+            });
+
+            function reloadPreview() {
+                //setting device type to URL, that BE can get it and handle visibility checks
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('device', localStorage.getItem('preview-screen-size'));
+
+                fetch('/studio/refresh' + window.location.search, {method: 'POST'})
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("HTTP error " + response.status);
+                        }
+
+                        // will reload window
+                        window.location.search = urlParams;
+                    })
+                    .catch(error => {
+                        console.error('API request error:', error);
+                    });
+            }
+
+            function listenToNewUpdates() {
+                const url = `/studio/updated?version=${previewVersion}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.updated) {
+                            console.log('Data is updated:', data);
+                            lastUpdateResponse = data;
+                            bannerForUpdate.style.display = 'flex';
+                            iframe.style.marginTop = '96px'
+                            return;
+                        }
+
+                        setTimeout(listenToNewUpdates, 5000);
+                    })
+                    .catch(error => {
+                        console.error('API request error:', error);
+                        setTimeout(listenToNewUpdates, 10000);
+                    });
+            }
+
+            function setScreenActiveState(target) {
+
+
+                iframe.classList.remove("iframe-preview--mobile");
+                iframe.classList.remove("iframe-preview--tablet");
+
+                links.forEach(function (link) {
+                    link.classList.remove("active");
+                });
+                target.classList.add("active");
+
+                if (target.classList.contains("desktop")) {
+                    localStorage.setItem('preview-screen-size', 'desktop')
+                } else if (target.classList.contains("tablet")) {
+                    iframe.classList.add("iframe-preview--tablet");
+                    localStorage.setItem('preview-screen-size', 'tablet')
+                } else if (target.classList.contains("mobile")) {
+                    iframe.classList.add("iframe-preview--mobile");
+                    localStorage.setItem('preview-screen-size', 'mobile')
+                }
+                reloadPreview();
+            }
+
+            function setSelectedScreenSize() {
+                const screenSizes = ['mobile', 'tablet', 'desktop'];
+                const screenSizeClassPrefix = 'iframe-preview--';
+
+                iframe.classList.remove(...screenSizes.map(size => screenSizeClassPrefix + size));
+                links.forEach(link => link.classList.remove('active'));
+
+                const screenSize = localStorage.getItem('preview-screen-size');
+                if (screenSize && screenSizes.includes(screenSize)) {
+                    iframe.classList.add(screenSizeClassPrefix + screenSize);
+                    document.querySelector('.' + screenSize).classList.add('active');
+                }
+            }
+
+            document.addEventListener("click", function (event) {
+                const target = event.target;
+                if (target.closest(".icon")) {
+                    event.preventDefault();
+                    setScreenActiveState(target.closest(".icon"));
+                }
+            });
+
+            selectElement.addEventListener('change', function (e) {
+                selectedUserEmail = this.value;
+                handleSelectChange();
+            });
+
+            function handleSubmit() {
+                const checkboxValue = document.querySelector('.custom-checkbox input')?.checked;
+                if (checkboxValue) {
+                    localStorage.setItem('isConfirmationModalDisabled', 'true');
+                }
+
+                onUserSelect();
+
+                $('#userConfirmationModal').modal('hide');
+            }
+
+            function handleSelectChange() {
+                const isConfirmationModalDisabled = localStorage.getItem('isConfirmationModalDisabled');
+                if (isConfirmationModalDisabled !== 'true') {
+                    $('#userConfirmationModal').modal('show');
+                } else {
+                    onUserSelect();
+                }
+            }
+
+            $('#userConfirmationModal').on('show.bs.modal', function (e) {
+                const btn = document.querySelector('.submit-btn');
+                selectElement.removeEventListener('change', handleSelectChange);
+                btn.removeEventListener('click', handleSubmit);
+                btn.addEventListener('click', handleSubmit);
+
+
+                $('.modal-body').html(`
+                            <p>You are about to preview the latest version of your app, including unpublished changes, as
+                            <strong>${selectedUserEmail}</strong>.</p>
+                        <br>
+                        <p>Please note that any actions you perform while previewing, such as adding, editing, or deleting data,
+                            will modify the data in your data source.</p>
+                        `)
+            })
+
+            function loadApplicationUsers() {
+                let url = "/studio/users";
+                fetch(url).then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.json();
+                }).then(function (jsonData) {
+                    const result = jsonData.map(({
+                                                     email,
+                                                     name = '',
+                                                     id,
+                                                     role = '',
+                                                     imageUrl = '',
+                                                     isLoggedInUser = false
+                                                 }) => ({
+                        value: email,
+                        id,
+                        isLoggedInUser,
+                        customProperties: {
+                            name,
+                            email,
+                            role,
+                            imageUrl,
+                            icon: "ph-user"
+                        }
+                    }));
+
+                    applicationUsers = [
+                        {
+                            label: '',
+                            id: '',
+                            choices: [
+                                {
+                                    value: 'Non-logged-in user',
+                                    id: 'anonymous',
+                                    customProperties: {
+                                        name: '',
+                                        email: 'Non-logged-in user',
+                                        role: '',
+                                        image: '',
+                                        icon: ''
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            label: 'USERS',
+                            id: 'users',
+                            choices: result
+                        }
+                    ];
+
+                    choices.setChoices(applicationUsers);
+
+                    const [nonLoggedInUser, otherUsers] = applicationUsers;
+                    const selectedUserId = otherUsers.choices.find((user) => user.isLoggedInUser)?.id;
+
+                    if (selectedUserId) {
+                        const [nonLoggedInUser, otherUsers = {choices: []}] = applicationUsers;
+                        const selectedUser = otherUsers.choices.find(user => user.id === selectedUserId);
+
+                        choices.setChoiceByValue(selectedUser.value);
+                    } else {
+                        choices.setChoiceByValue(nonLoggedInUser.choices[0].value);
+                    }
+
+                }).catch(function (err) {
+                    console.log("An error occurred while fetching the API data.", err);
+                    showToast();
+                });
+            }
+
+            function onUserSelect() {
+                const [nonLoggedInUser, otherUsers = {choices: []}] = applicationUsers;
+                const selectedUser = otherUsers.choices.find(user => user.value === selectedUserEmail);
+                let userId = selectedUser?.id || 'anonymous';
+
+                let url = "/studio/impersonate/" + userId;
+                fetch(url).then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    if (userId === 'anonymous') {
+                        const currentUrl = new URL(window.location.href);
+                        const queryParams = currentUrl.search;
+                        location.href = `${window.location.origin}${queryParams}`;
+                        return;
+                    }
+                    location.reload();
+                }).catch(error => {
+                    console.log("An error occurred: ", error);
+                    showToast();
+                });
+            }
+
+            function initTooltip() {
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                })
+            }
+
+
+            function showToast() {
+                $('.toast').toast('show')
+            }
+
+            function getCookie(name) {
+                let cookieArr = document.cookie.split(";");
+                for (let i = 0; i < cookieArr.length; i++) {
+                    let cookiePair = cookieArr[i].split("=");
+                    if (name === cookiePair[0].trim()) {
+                        return cookiePair[1];
+                    }
+                }
+                return null;
+            }
+
+            function updateLinksInIframe(iframeDocument) {
+                const elements = iframeDocument.querySelectorAll('a');
+                elements.forEach(tag => {
+                    let href = tag.getAttribute('href');
+                    const target = tag.getAttribute('target');
+                    if (href && !href.includes('show-toolbar=true')) {
+                        if (href.startsWith('#') || href.startsWith('/') || href.includes(window.location.hostname)) {
+                            if (href === '#') {
+                                href = '/';
+                            }
+                            // append the query param if NOT "scroll to section" action.
+                            if (!href.includes('#')) {
+                                const newHref = href + (href.includes('?') ? '&' : '?') + 'show-toolbar=true';
+                                tag.setAttribute('href', newHref);
+                            }
+                        }
+                        // Set target from self to parent if NOT "scroll to section" action
+                        if ((!target || target === '_self') && !href.includes('#')) {
+                            tag.setAttribute('target', '_parent');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Appcues -->
+    <script type="text/javascript">var Appcues = Appcues || [];</script>
+    <script src="https://fast.appcues.com/104147.js"></script>
+    <!-- Appcues -->
+
+</head>
+
+<body>
+
+
+<div class="fixed-top preview-header">
+    <div class="update-banner" style="display: none">
+        <span>Your app has been updated. Refresh to see the latest changes</span>
+        <button class="refresh-button" id="refresh-button">Refresh</button>
+    </div>
+    <div class="position-relative w-100 toolbar">
+        <div class="preview-header__view--selection">
+            <label for="viewSelect">Preview as:</label>
+            <select id="viewSelect"></select>
+            <i class="ph ph-info " data-toggle="tooltip"
+               data-placement="bottom"
+               data-html="true"
+               title="You are previewing the latest version of the app, including unpublished changes.<br><br>
+                  Please note that actions will affect your real data.">
+            </i>
+        </div>
+
+        <div class="preview-header__screens">
+            <a class="icon desktop active">
+                <i class="ph ph-desktop desktop"></i>
+                <i class="ph ph-desktop desktop-active"></i>
+            </a>
+            <a class="icon tablet">
+                <i class="ph ph-device-tablet-speaker tablet"></i>
+                <i class="ph ph-device-tablet-speaker mobile-active"></i>
+            </a>
+            <a class="icon mobile">
+                <i class="ph ph-device-mobile-camera mobile"></i>
+                <i class="ph ph-device-mobile-camera mobile-active"></i>
+            </a>
+        </div>
+
+        <div class="preview-header__shareable">
+            <a class="preview_header__shareable--link"
+               data-trigger="click"
+               title="Copied!"
+               data-toggle="tooltip">
+                <i class="ph ph-link"></i>
+                Get shareable link
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--Confirmation modal-->
+<div id="userConfirmationModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalCenterTitle">
+                    Preview as a user
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ph ph-x-circle"></i>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <div class="custom-control custom-checkbox remember-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customControlInline">
+                    <label class="custom-control-label" for="customControlInline">Don’t show this again</label>
+                </div>
+
+                <button type="button" class="btn submit-btn">
+                    Ok, I understand
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Toaster-->
+<div aria-live="polite" aria-atomic="true">
+    <div id="toast-container" class="toast" data-delay="4000">
+        <div class="toast-body">
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <i class="ph ph-x-circle"></i>
+            </button>
+            <div class="message">Something went wrong, please try again.</div>
+        </div>
+    </div>
+</div>
+
+<div class="iframe-container">
+    <iframe id="preview-iframe" class="full-screen-preview__iframe" src="https://guadalupe9381.preview.softr.app/booking?t=1696975775689" allowfullscreen></iframe>
+</div>
+
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
